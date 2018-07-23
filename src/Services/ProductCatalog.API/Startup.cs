@@ -20,6 +20,8 @@ namespace ProductCatalog.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<SecretSettings>(Configuration);
+            services.Configure<CatalogSettings>(Configuration);
+            string connectionString = Configuration["ConnectionStrings:Default"];
             services.AddDbContext<CatalogContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
 
             services.AddMvc();

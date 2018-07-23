@@ -2,6 +2,10 @@
 {
     public class SecretSettings
     {
-        public string Default { get; set; }
+        public class ConnectionStrings
+        {
+            public string Default { get; set; }
+
+        }
     }
 }
