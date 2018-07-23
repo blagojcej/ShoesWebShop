@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0E15C4C6-8721-486E-9222-77B1ABBDDF5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E7A03D1A-D95C-47F8-A1D1-9A1F8FF79599}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{94EC36AD-0CA9-4D8C-A2DA-FFEE27CBA12D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCatalog.API", "src\Services\ProductCatalog.API\ProductCatalog.API.csproj", "{DCDAB505-8250-4917-8F3E-B84D3A538C06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCDAB505-8250-4917-8F3E-B84D3A538C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDAB505-8250-4917-8F3E-B84D3A538C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDAB505-8250-4917-8F3E-B84D3A538C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDAB505-8250-4917-8F3E-B84D3A538C06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E7A03D1A-D95C-47F8-A1D1-9A1F8FF79599} = {0E15C4C6-8721-486E-9222-77B1ABBDDF5B}
+		{94EC36AD-0CA9-4D8C-A2DA-FFEE27CBA12D} = {0E15C4C6-8721-486E-9222-77B1ABBDDF5B}
+		{DCDAB505-8250-4917-8F3E-B84D3A538C06} = {E7A03D1A-D95C-47F8-A1D1-9A1F8FF79599}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F35B4395-7D8E-455D-A491-F2E35576E91D}
+	EndGlobalSection
+EndGlobal
