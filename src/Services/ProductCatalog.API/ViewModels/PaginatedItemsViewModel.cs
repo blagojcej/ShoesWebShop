@@ -6,10 +6,10 @@ namespace ProductCatalog.API.ViewModels
     {
         public int PageSize { get; private set; }
         public int PageIndex { get; private set; }
-        public int Count { get; private set; }
+        public long Count { get; private set; }
         public IEnumerable<TEntity> Data { get; private set; }
 
-        public PaginatedItemsViewModel(int pageIndex, int pageSize, int count, IEnumerable<TEntity> data)
+        public PaginatedItemsViewModel(int pageIndex, int pageSize, long count, IEnumerable<TEntity> data)
         {
             this.PageIndex = pageIndex;
             this.PageSize = pageSize;
