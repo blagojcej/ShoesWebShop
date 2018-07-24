@@ -77,7 +77,7 @@ namespace ProductCatalog.API.Controllers
         public async Task<IActionResult> Items([FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
         {
             var totalItems = await _context.CatalogItems.LongCountAsync();
-            var itemsOnPage = await _context.CatalogItems.OrderBy(c => c.Name).Skip(pageSize * pageIndex).Take(pageSize)
+            var itemsOnPage = await _context.CatalogItems.OrderBy(c => c.Name).Skip((pageIndex - 1) * pageSize).Take(pageSize)
                 .ToListAsync();
 
             itemsOnPage = ChangeUrlPlaceHolder(itemsOnPage);
@@ -93,7 +93,7 @@ namespace ProductCatalog.API.Controllers
         {
             var totalItems = await _context.CatalogItems.Where(c => c.Name.StartsWith(name)).LongCountAsync();
             var itemsOnPage = await _context.CatalogItems.Where(c => c.Name.StartsWith(name)).OrderBy(c => c.Name)
-                .Skip(pageSize * pageIndex).Take(pageSize)
+                .Skip((pageIndex - 1) * pageSize).Take(pageSize)
                 .ToListAsync();
 
             itemsOnPage = ChangeUrlPlaceHolder(itemsOnPage);
@@ -122,7 +122,7 @@ namespace ProductCatalog.API.Controllers
 
             var totalItems = await root.LongCountAsync();
             var itemsOnPage = await root.OrderBy(c => c.Name)
-                .Skip(pageSize * pageIndex).Take(pageSize)
+                .Skip((pageIndex - 1) * pageSize).Take(pageSize)
                 .ToListAsync();
 
             itemsOnPage = ChangeUrlPlaceHolder(itemsOnPage);
