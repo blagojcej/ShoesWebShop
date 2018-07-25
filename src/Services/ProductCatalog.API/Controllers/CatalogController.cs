@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using ProductCatalog.API.Data;
 using ProductCatalog.API.Domain;
 using ProductCatalog.API.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProductCatalog.API.Controllers
 {
@@ -27,7 +26,7 @@ namespace ProductCatalog.API.Controllers
 
         private List<CatalogItem> ChangeUrlPlaceHolder(List<CatalogItem> items)
         {
-            items.ForEach(x => x.PictureUrl.Replace("http://externalcatalogbaseurltobereplaced/",
+            items.ForEach(x => x.PictureUrl = x.PictureUrl.Replace("http://externalcatalogbaseurltobereplaced/",
                 _settings.Value.ExternalCatalogBaseUrl));
 
             return items;
