@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShoesWebShop.Web.WebMvc.Infrastructure;
 
 namespace ShoesWebShop.Web.WebMvc
 {
@@ -26,6 +27,7 @@ namespace ShoesWebShop.Web.WebMvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton<IHttpClient, CustomHttpClient>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
