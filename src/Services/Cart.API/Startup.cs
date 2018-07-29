@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Cart.API.Data;
+using Cart.API.Infrastructure.Filters;
+using Cart.API.Model;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProductCatalog.API.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace ProductCatalog.API
+namespace Cart.API
 {
     public class Startup
     {
@@ -21,22 +23,23 @@ namespace ProductCatalog.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<SecretSettings>(Configuration);
-            services.Configure<CatalogSettings>(Configuration);
-            string connectionString = Configuration["ConnectionStrings:Default"];
-            services.AddDbContext<CatalogContext>(options =>
+            services.AddDbContext<CartContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
 
-            services.AddMvc();
+            services.AddTransient<ICartRepository, CartRepository>();
+
+            services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
+                .AddControllersAsServices();
 
             services.AddSwaggerGen(options =>
             {
                 options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new Info
                 {
-                    Title = "ShoesWebShop - Product Catalog HTTP API",
+                    Title = "Basket HTTP API",
                     Version = "v1",
                     Description =
-                        "The Product Catalog Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
+                        "The Basket Service HTTP API",
                     TermsOfService = "Terms Of Service"
                 });
             });
@@ -50,8 +53,14 @@ namespace ProductCatalog.API
                 app.UseDeveloperExceptionPage();
             }
 
+            string pathBase = Configuration["PATH_BASE"];
             app.UseSwagger()
-                .UseSwaggerUI(c => { c.SwaggerEndpoint($"/swagger/v1/swagger.json", "Product Catalog API"); });
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(
+                        $"{(!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty)}/swagger/swagger.json",
+                        "Basket.API v1");
+                });
 
             app.UseMvc();
         }

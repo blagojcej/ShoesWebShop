@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using ShoesWebShop.Web.WebMvc.Services;
 using ShoesWebShop.Web.WebMvc.ViewModels;
 using WebMvc.Models;
@@ -50,6 +51,14 @@ namespace WebMvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application descripton page.";
+
+            return View();
         }
     }
 }
