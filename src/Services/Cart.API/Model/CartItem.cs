@@ -9,5 +9,8 @@
         public decimal OldUnitPrice { get; set; }
         public int Quantity { get; set; }
         public string PictureUrl { get; set; }
+
+        public string CartId { get; set; }
+        public Cart Cart { get; set; }
     }
 }

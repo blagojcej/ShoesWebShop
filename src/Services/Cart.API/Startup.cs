@@ -1,6 +1,9 @@
-﻿using Cart.API.Data;
+﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using Cart.API.Data;
 using Cart.API.Infrastructure.Filters;
 using Cart.API.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +34,8 @@ namespace Cart.API
             services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
                 .AddControllersAsServices();
 
+            ConfigureAuthService(services);
+
             services.AddSwaggerGen(options =>
             {
                 options.DescribeAllEnumsAsStrings();
@@ -42,6 +47,37 @@ namespace Cart.API
                         "The Basket Service HTTP API",
                     TermsOfService = "Terms Of Service"
                 });
+                options.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                {
+                    Type = "oauth2",
+                    Flow = "implicit",
+                    AuthorizationUrl = $"{Configuration.GetValue<string>("IdentityUrl")}/connect/authorize",
+                    TokenUrl = $"{Configuration.GetValue<string>("IdentityUrl")}/connect/token",
+                    Scopes = new Dictionary<string, string>()
+                    {
+                        {"basket","Basket API" }
+                    }
+                });
+
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
+            });
+        }
+
+        private void ConfigureAuthService(IServiceCollection services)
+        {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = identityUrl;
+                options.RequireHttpsMetadata = false;
+                options.Audience = "basket";
             });
         }
 
@@ -54,12 +90,19 @@ namespace Cart.API
             }
 
             string pathBase = Configuration["PATH_BASE"];
+
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                app.UsePathBase(pathBase);
+            }
+
             app.UseSwagger()
                 .UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint(
-                        $"{(!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty)}/swagger/swagger.json",
+                        $"{(!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty)}/swagger/v1/swagger.json",
                         "Basket.API v1");
+                    //c.ConfigureOAuth2("basketswaggerui", "", "", "Basket Swagger UI");
                 });
 
             app.UseMvc();

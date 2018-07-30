@@ -11,8 +11,8 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      //"launchUrl": "api/v1/Cart",
-      "launchUrl": "swagger",
+      "launchUrl": "api/v1/Cart",
+      //"launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,8 @@
     "Cart.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5002/swagger",
+      //"launchUrl": "http://localhost:5002/swagger",
+      "launchUrl": "http://localhost:5002/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

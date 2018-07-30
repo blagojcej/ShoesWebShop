@@ -1,13 +1,15 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using Cart.API.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Cart.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api//v1/[controller]")]
+    [Route("api/v1/[controller]")]
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ILogger _logger;
