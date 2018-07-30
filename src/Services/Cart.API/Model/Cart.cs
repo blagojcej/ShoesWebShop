@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cart.API.Model
 {
     public class Cart
     {
+        [Key]
         public string BuyerId { get; set; }
         public List<CartItem> Items { get; set; }
 
